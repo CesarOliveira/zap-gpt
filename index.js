@@ -63,6 +63,8 @@ const commands = (client, message) => {
 
     let firstWord = message.text.substring(0, message.text.indexOf(" "));
 
+    console.log(message.text);
+
     switch (firstWord) {
         case iaCommands.davinci3:
             const question = message.text.substring(message.text.indexOf(" "));
@@ -74,7 +76,16 @@ const commands = (client, message) => {
                  * nosso próprio número e sim para
                  * a pessoa ou grupo para o qual eu enviei
                  */
-                client.sendText(message.from === process.env.BOT_NUMBER ? message.to : message.from, response)
+
+                console.log(message);
+
+                let to = message.to;
+                if (message.isGroupMsg) {
+                    to = message.chatId;
+                }
+                console.log(response);
+
+                client.sendText(to, response)
             })
             break;
 
