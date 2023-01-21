@@ -99,8 +99,8 @@ const commands = (client, message) => {
                     imgUrl,
                     imgDescription,
                     `🤖 Chat GPT\n\n
-                    ${imgDescription}\n\n
-                    Imagem gerada pela IA DALL-E`
+${imgDescription}\n\n
+Imagem gerada pela IA DALL-E`
                 )
             })
             break;

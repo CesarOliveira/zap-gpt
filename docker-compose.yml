@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  worker:
+    container_name: zap-bot-ai
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GH_TOKEN: ${GH_TOKEN}
+        OPENAI_KEY: ${OPENAI_KEY}
+        ORGANIZATION_ID: ${ORGANIZATION_ID}
+        PHONE_NUMBER: ${PHONE_NUMBER}
+    environment:
+      GH_TOKEN: ${GH_TOKEN}
+    volumes:
+      - ./:/app:cached
+      - ~/.aws:/home/node/.aws
+      - bundle_cache:/bundle:cached
+    command: 'sh post-up.sh'
+volumes:
+  bundle_cache:
