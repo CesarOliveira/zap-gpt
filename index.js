@@ -69,13 +69,6 @@ const commands = (client, message) => {
         case iaCommands.davinci3:
             const question = message.text.substring(message.text.indexOf(" "));
             getDavinciResponse(question).then((response) => {
-                /*
-                 * Faremos uma validação no message.from
-                 * para caso a gente envie um comando
-                 * a response não seja enviada para
-                 * nosso próprio número e sim para
-                 * a pessoa ou grupo para o qual eu enviei
-                 */
 
                 console.log(message);
 
@@ -92,11 +85,22 @@ const commands = (client, message) => {
         case iaCommands.dalle:
             const imgDescription = message.text.substring(message.text.indexOf(" "));
             getDalleResponse(imgDescription, message).then((imgUrl) => {
+
+                let to = message.to;
+                if (message.isGroupMsg) {
+                    to = message.chatId;
+                }
+
+                console.log(message);
+                console.log(to);
+
                 client.sendImage(
-                    message.from === process.env.BOT_NUMBER ? message.to : message.from,
+                    to,
                     imgUrl,
                     imgDescription,
-                    'Imagem gerada pela IA DALL-E 🤖'
+                    `🤖 Chat GPT\n\n
+                    ${imgDescription}\n\n
+                    Imagem gerada pela IA DALL-E`
                 )
             })
             break;
