@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN apk add --update --no-cache openssh git make build-base curl py-pip bash
+RUN apk add --update --no-cache openssh git make build-base curl py-pip bash chromium
 
 RUN yarn && chown node:node /app && rm -f /app/.npmrc
 

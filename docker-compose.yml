@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  worker:
+  chat:
     container_name: zap-bot-ai
     build:
       context: .
