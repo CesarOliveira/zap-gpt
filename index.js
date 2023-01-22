@@ -63,20 +63,20 @@ const commands = (client, message) => {
 
     let firstWord = message.text.substring(0, message.text.indexOf(" "));
 
-    console.log(message.text);
+    // console.log(message.text);
 
     switch (firstWord) {
         case iaCommands.davinci3:
             const question = message.text.substring(message.text.indexOf(" "));
             getDavinciResponse(question).then((response) => {
 
-                console.log(message);
+                // console.log(message);
 
                 let to = message.to;
                 if (message.isGroupMsg) {
                     to = message.chatId;
                 }
-                console.log(response);
+                // console.log(response);
 
                 client.sendText(to, response)
             })
@@ -91,8 +91,8 @@ const commands = (client, message) => {
                     to = message.chatId;
                 }
 
-                console.log(message);
-                console.log(to);
+                // console.log(message);
+                // console.log(to);
 
                 client.sendImage(
                     to,
