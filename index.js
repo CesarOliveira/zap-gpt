@@ -63,22 +63,17 @@ const commands = (client, message) => {
 
     let firstWord = message.text.substring(0, message.text.indexOf(" "));
 
-    // console.log(message.text);
+
+    let to = message.to;
+    if (message.isGroupMsg) {
+        to = message.chatId;
+    }
 
     try {
         switch (firstWord) {
             case iaCommands.davinci3:
                 const question = message.text.substring(message.text.indexOf(" "));
                 getDavinciResponse(question).then((response) => {
-
-                    // console.log(message);
-
-                    let to = message.to;
-                    if (message.isGroupMsg) {
-                        to = message.chatId;
-                    }
-                    // console.log(response);
-
                     client.sendText(to, response)
                 })
                 break;
@@ -86,14 +81,6 @@ const commands = (client, message) => {
             case iaCommands.dalle:
                 const imgDescription = message.text.substring(message.text.indexOf(" "));
                 getDalleResponse(imgDescription, message).then((imgUrl) => {
-
-                    let to = message.to;
-                    if (message.isGroupMsg) {
-                        to = message.chatId;
-                    }
-
-                    // console.log(message);
-                    // console.log(to);
 
                     client.sendImage(
                         to,
@@ -107,7 +94,7 @@ const commands = (client, message) => {
                 break;
         }
     } catch (e) {
-        return `❌ OpenAI Response Error: ${e.message}`
+        client.sendText(to, `❌ OpenAI Response Error: ${e.message}`);
     }
 }
 
