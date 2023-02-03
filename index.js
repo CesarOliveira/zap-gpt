@@ -51,7 +51,7 @@ const getDalleResponse = async (clientText) => {
         const response = await openai.createImage(options);
         return response.data.data[0].url
     } catch (e) {
-        return `❌ OpenAI Response Error: ${e.response.data.error.message}`
+        throw new Error(`❌ OpenAI Response Error: ${e.response.data.error.message}`)
     }
 }
 
@@ -81,7 +81,6 @@ const commands = (client, message) => {
             case iaCommands.dalle:
                 const imgDescription = message.text.substring(message.text.indexOf(" "));
                 getDalleResponse(imgDescription, message).then((imgUrl) => {
-
                     client.sendImage(
                         to,
                         imgUrl,
@@ -90,7 +89,9 @@ const commands = (client, message) => {
     ${imgDescription}\n\n
     Imagem gerada pela IA DALL-E`
                     )
-                })
+                }).catch((e) => {
+                    client.sendText(to, e.message)
+                });
                 break;
         }
     } catch (e) {
