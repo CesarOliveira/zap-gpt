@@ -65,45 +65,49 @@ const commands = (client, message) => {
 
     // console.log(message.text);
 
-    switch (firstWord) {
-        case iaCommands.davinci3:
-            const question = message.text.substring(message.text.indexOf(" "));
-            getDavinciResponse(question).then((response) => {
+    try {
+        switch (firstWord) {
+            case iaCommands.davinci3:
+                const question = message.text.substring(message.text.indexOf(" "));
+                getDavinciResponse(question).then((response) => {
 
-                // console.log(message);
+                    // console.log(message);
 
-                let to = message.to;
-                if (message.isGroupMsg) {
-                    to = message.chatId;
-                }
-                // console.log(response);
+                    let to = message.to;
+                    if (message.isGroupMsg) {
+                        to = message.chatId;
+                    }
+                    // console.log(response);
 
-                client.sendText(to, response)
-            })
-            break;
+                    client.sendText(to, response)
+                })
+                break;
 
-        case iaCommands.dalle:
-            const imgDescription = message.text.substring(message.text.indexOf(" "));
-            getDalleResponse(imgDescription, message).then((imgUrl) => {
+            case iaCommands.dalle:
+                const imgDescription = message.text.substring(message.text.indexOf(" "));
+                getDalleResponse(imgDescription, message).then((imgUrl) => {
 
-                let to = message.to;
-                if (message.isGroupMsg) {
-                    to = message.chatId;
-                }
+                    let to = message.to;
+                    if (message.isGroupMsg) {
+                        to = message.chatId;
+                    }
 
-                // console.log(message);
-                // console.log(to);
+                    // console.log(message);
+                    // console.log(to);
 
-                client.sendImage(
-                    to,
-                    imgUrl,
-                    imgDescription,
-                    `🤖 Chat GPT\n\n
-${imgDescription}\n\n
-Imagem gerada pela IA DALL-E`
-                )
-            })
-            break;
+                    client.sendImage(
+                        to,
+                        imgUrl,
+                        imgDescription,
+                        `🤖 Chat GPT\n\n
+    ${imgDescription}\n\n
+    Imagem gerada pela IA DALL-E`
+                    )
+                })
+                break;
+        }
+    } catch (e) {
+        return `❌ OpenAI Response Error: ${e.message}`
     }
 }
 
